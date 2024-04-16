@@ -1,0 +1,11 @@
+{
+  "codeowners": ["EllisBarnwellCC"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/carboncoop/hass-mqtt-forwarder",
+  "domain": "mqtt-forwarder",
+  "iot_class": "assumed_state",
+  "name": "MQTT Forwarder",
+  "requirements": [],
+  "version": "1.0.0"
+}
