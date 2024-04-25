@@ -1,0 +1,13 @@
+{
+    "config": {
+      "step": {
+        "user": {
+          "data": {
+            "name": "Name"
+          },
+          "description": "Please choose the entity for forwarding",
+          "title": "Entity"
+        }
+      }
+    }
+  }

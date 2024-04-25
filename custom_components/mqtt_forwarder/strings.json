@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "selected_device": "Selected device"
+        },
+        "title": "Entity",
+        "description": "Please choose the entity for forwarding"
+      }
+    }
+  }
+}

@@ -3,9 +3,9 @@
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/carboncoop/hass-mqtt-forwarder",
-  "domain": "mqtt-forwarder",
+  "domain": "mqtt_forwarder",
   "iot_class": "assumed_state",
   "name": "MQTT Forwarder",
-  "requirements": [],
+  "requirements": ["voluptuous"],
   "version": "1.0.0"
 }
