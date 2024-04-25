@@ -1,5 +1,5 @@
 {
-  "codeowners": ["EllisBarnwellCC"],
+  "codeowners": ["@EllisBarnwellCC"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/carboncoop/hass-mqtt-forwarder",

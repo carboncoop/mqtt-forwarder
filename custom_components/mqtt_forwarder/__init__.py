@@ -21,7 +21,7 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: ConfigEntry) -> boo
     _LOGGER.info("Creating mqtt forwarding automation for entity " + entry.data["selected_device"])
 
     mqtt_message = f'''- id: '1558647997872'
-  alias: Sensor to MQTT
+  alias: MQTT forward - {entry.data["selected_device"]}
   trigger:
     - entity_id: {entry.data["selected_device"]}
       platform: state
