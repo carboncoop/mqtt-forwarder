@@ -1,5 +1,6 @@
 import logging
 import os
+from random import randrange
 
 from homeassistant import core
 from homeassistant.config_entries import ConfigEntry
@@ -20,7 +21,9 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: ConfigEntry) -> boo
     """Set up a mqtt forwarding entry from a config entry."""
     _LOGGER.info("Creating mqtt forwarding automation for entity " + entry.data["selected_device"])
 
-    mqtt_message = f'''- id: '1558647997872'
+    random_id = randrange(1000000000000, 10000000000000)
+
+    mqtt_message = f'''- id: '{random_id}'
   alias: MQTT forward - {entry.data["selected_device"]}
   trigger:
     - entity_id: {entry.data["selected_device"]}
