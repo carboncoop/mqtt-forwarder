@@ -3,7 +3,8 @@
     "step": {
       "user": {
         "data": {
-          "selected_device": "Selected device"
+          "selected_entity": "Selected device",
+          "mqtt_host": "MQTT host"
         },
         "title": "Entity",
         "description": "Please choose the entity for forwarding"

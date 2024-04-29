@@ -6,6 +6,6 @@
   "domain": "mqtt_forwarder",
   "iot_class": "assumed_state",
   "name": "MQTT Forwarder",
-  "requirements": ["voluptuous"],
+  "requirements": ["voluptuous", "paho-mqtt"],
   "version": "1.0.0"
 }

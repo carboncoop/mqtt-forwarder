@@ -4,9 +4,9 @@ from random import randrange
 
 from homeassistant import core
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers import entity_registry as er
 
 from . import const
+from . import services
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -14,44 +14,49 @@ entities = []
 
 
 async def async_setup(hass: core.HomeAssistant, config: dict) -> bool:
+
+    def handle_mqtt_forward(call):
+        services.send_mqtt(call.data.get("host"), 1883, call.data.get("topic"), call.data.get("payload"))
+
+    hass.services.async_register(const.DOMAIN, "mqtt_forward", handle_mqtt_forward)
+
     return True
 
 
 async def async_setup_entry(hass: core.HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up a mqtt forwarding entry from a config entry."""
-    _LOGGER.info("Creating mqtt forwarding automation for entity " + entry.data["selected_device"])
+    _LOGGER.info("Creating mqtt forwarding automation for entity " + entry.data["selected_entity"])
 
     random_id = randrange(1000000000000, 10000000000000)
 
     mqtt_message = f'''- id: '{random_id}'
-  alias: MQTT forward - {entry.data["selected_device"]}
+  alias: MQTT forward - {entry.data["selected_entity"]}
   trigger:
-    - entity_id: {entry.data["selected_device"]}
+    - entity_id: {entry.data["selected_entity"]}
       platform: state
   condition: []
   action:
-    - service: mqtt.publish
+    - service: mqtt_forwarder.mqtt_forward
       data_template:
         payload: '{{ "entity": "{{{{trigger.entity_id}}}}", "value": {{{{trigger.to_state.state}}}}}}'
         topic: homeassistant/incomming
+        host: {entry.data["mqtt_host"]}
 '''
 
-    filename = os.path.join(const.AUTOMATION_LOCATION, entry.data["selected_device"] + ".yaml")
+    filename = os.path.join(const.AUTOMATION_LOCATION, entry.data["selected_entity"] + ".yaml")
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     f = open(filename, "w")
     f.write(mqtt_message)
     f.close()
 
-    _LOGGER.debug("Calling automation reload")
     await hass.services.async_call('automation', 'reload')
-    _LOGGER.debug("Finished automation reload")
 
     return True
 
 
 async def async_remove_entry(hass: core.HomeAssistant, entry: ConfigEntry) -> None:
-    _LOGGER.info("Removing mqtt forwarding automation for entity " + entry.data["selected_device"])
-    filename = os.path.join(const.AUTOMATION_LOCATION, entry.data["selected_device"] + ".yaml")
+    _LOGGER.info("Removing mqtt forwarding automation for entity " + entry.data["selected_entity"])
+    filename = os.path.join(const.AUTOMATION_LOCATION, entry.data["selected_entity"] + ".yaml")
 
     os.remove(filename)
 

@@ -1,13 +1,14 @@
 {
-    "config": {
-      "step": {
-        "user": {
-          "data": {
-            "name": "Name"
-          },
-          "description": "Please choose the entity for forwarding",
-          "title": "Entity"
-        }
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "selected_entity": "Entity",
+          "mqtt_host": "MQTT host"
+        },
+        "title": "Entity",
+        "description": "Please choose the entity for forwarding"
       }
     }
   }
+}
