@@ -4,7 +4,9 @@
       "user": {
         "data": {
           "selected_entity": "Selected device",
-          "mqtt_host": "MQTT host"
+          "device_name": "Device name",
+          "measurement": "Measurement",
+          "multiplier": "Multiplier"
         },
         "title": "Entity",
         "description": "Please choose the entity for forwarding"
