@@ -29,8 +29,7 @@ def send_mqtt(value: float, device_name: str, measurement: str, multiplier: floa
         _LOGGER.warn("Unable to find required environment variable BAMBOO_MQTT_USER")
         missing_variable = True
     if mqtt_pass is None:
-        _LOGGER.warn("Unable to find required environment variable BAMBOO_MQTT_PASS")
-        missing_variable = True
+        _LOGGER.warn("Unable to find environment variable BAMBOO_MQTT_PASS. Please set this to authenticate MQTT messages")
 
     if missing_variable:
         return
@@ -67,8 +66,8 @@ port {mqtt_port}
 
     # TODO: Setup so there is one MQTT client that is reused
     client = mqtt_client.Client()
-    # if mqtt_user and mqtt_pass:
-    # client.username_pw_set(mqtt_user, mqtt_pass)
+    if mqtt_pass:
+        client.username_pw_set(mqtt_user, mqtt_pass)
     client.connect(mqtt_host, mqtt_port)
     client.loop_start()
     client.publish(topic, str(payload))
