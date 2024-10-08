@@ -11,8 +11,14 @@ from . import const
 
 _LOGGER = logging.getLogger(__name__)
 
-MEASUREMENT_LIST = ["power",
-                    "consumption",
+MEASUREMENT_LIST = ["energy_consumption_delta",
+                    "energy_injection_delta",
+                    "power",
+                    "mode",
+                    "quality",
+                    "tempsp",
+                    "temp",
+                    "status"
                     ]
 
 
@@ -27,7 +33,8 @@ class ConfigFlowHandler(config_entries.ConfigFlow, domain=const.DOMAIN):
         entities_schema_local = vol.Schema({vol.Required("selected_entity"): vol.In(list(self.hass.states.async_entity_ids())),
                                             vol.Required("device_name"): cv.string,
                                             vol.Required("measurement"): vol.In(MEASUREMENT_LIST),
-                                            vol.Required("multiplier", default=1.0): vol.Coerce(float)})
+                                            vol.Required("multiplier", default=1.0): vol.Coerce(float),
+                                            vol.Required("site_id"): vol.Coerce(int)})
 
         errors: Optional[Dict[str, Any]] = {}
 

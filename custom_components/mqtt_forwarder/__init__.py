@@ -15,10 +15,11 @@ entities = []
 
 async def async_setup(hass: core.HomeAssistant, config: dict) -> bool:
 
-    def handle_mqtt_forward(call):
-        services.send_mqtt(call.data.get("value"), call.data.get("device_name"), call.data.get("measurement"), call.data.get("multiplier"))
+    def handle_data_forward(call):
+        # TODO: Add switch to select between mqtt and http
+        services.send_http(call.data.get("value"), call.data.get("device_name"), call.data.get("measurement"), call.data.get("multiplier"), call.data.get("site_id"))
 
-    hass.services.async_register(const.DOMAIN, "mqtt_forward", handle_mqtt_forward)
+    hass.services.async_register(const.DOMAIN, "mqtt_forward", handle_data_forward)
 
     return True
 
@@ -42,6 +43,7 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: ConfigEntry) -> boo
         device_name: {entry.data["device_name"]}
         measurement: {entry.data["measurement"]}
         multiplier: {entry.data["multiplier"]}
+        site_id: {entry.data["site_id"]}
 '''
 
     filename = os.path.join(const.AUTOMATION_LOCATION, entry.data["selected_entity"] + ".yaml")
