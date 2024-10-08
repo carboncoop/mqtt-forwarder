@@ -21,6 +21,43 @@ MEASUREMENT_LIST = ["energy_consumption_delta",
                     "status"
                     ]
 
+# FULL_MEASUREMENT_LIST = ["power",
+#                          "power_mean",
+#                          "power_average",
+#                          "power_r",
+#                          "energy",
+#                          "energy_delta",
+#                          "energy_consumption_delta",
+#                          "energy_injection_delta",
+#                          "power_consumption",
+#                          "power_injection",
+#                          "soc",
+#                          "soh",
+#                          "availability",
+#                          "humidity",
+#                          "mode",
+#                          "plugged",
+#                          "powersp",
+#                          "powersupply",
+#                          "quality",
+#                          "schedule",
+#                          "status",
+#                          "statussp",
+#                          "temp",
+#                          "time",
+#                          "tempsp",
+#                          "external_temp",
+#                          "vref",
+#                          "lux",
+#                          "luxsp",
+#                          "vol",
+#                          "volsp",
+#                          "voldes",
+#                          "volin",
+#                          "voutd",
+#                          "co2"
+#                          ]
+
 
 class ConfigFlowHandler(config_entries.ConfigFlow, domain=const.DOMAIN):
     """Handle a config or options flow for mqtt forwarder."""
