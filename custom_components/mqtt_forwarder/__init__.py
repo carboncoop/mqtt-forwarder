@@ -33,15 +33,13 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: ConfigEntry) -> boo
     mqtt_message = f'''- id: '{random_id}'
   alias: MQTT forward - {entry.data["selected_entity"]}
   trigger:
-    - entity_id: {entry.data["selected_entity"]}
-      platform: state
     - platform: time_pattern
-      minutes: "/2"  # This triggers every 2 minutes
+      minutes: "/5"  # This triggers every 2 minutes
   condition: []
   action:
     - service: mqtt_forwarder.mqtt_forward
       data_template:
-        value: '{{{{trigger.to_state.state}}}}'
+        value: "{{{{ states('{entry.data["selected_entity"]}') }}}}"
         device_name: {entry.data["device_name"]}
         measurement: {entry.data["measurement"]}
         multiplier: {entry.data["multiplier"]}
@@ -50,6 +48,10 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: ConfigEntry) -> boo
 
     filename = os.path.join(const.AUTOMATION_LOCATION, entry.data["selected_entity"] + ".yaml")
     os.makedirs(os.path.dirname(filename), exist_ok=True)
+    if os.path.exists(filename):
+        # automation already exists
+        return True
+
     f = open(filename, "w")
     f.write(mqtt_message)
     f.close()
