@@ -18,7 +18,8 @@ MEASUREMENT_LIST = ["energy_consumption_delta",
                     "quality",
                     "tempsp",
                     "temp",
-                    "status"
+                    "status",
+                    "soc"
                     ]
 
 # FULL_MEASUREMENT_LIST = ["power",
