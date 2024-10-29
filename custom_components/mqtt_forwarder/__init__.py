@@ -34,7 +34,7 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: ConfigEntry) -> boo
   alias: MQTT forward - {entry.data["selected_entity"]}
   trigger:
     - platform: time_pattern
-      minutes: "/5"  # This triggers every 2 minutes
+      minutes: "/5"
   condition: []
   action:
     - service: mqtt_forwarder.mqtt_forward
