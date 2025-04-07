@@ -3,6 +3,7 @@ import os
 import datetime
 import pytz
 import requests
+import json
 
 from paho.mqtt import client as mqtt_client
 
@@ -49,6 +50,11 @@ port = {mqtt_port}
     now = datetime.datetime.now()
     timestamp = now.strftime('%Y-%m-%d-%H-%M')
 
+    try:
+        measurement_value = float(value) * multiplier
+    except (ValueError, TypeError):
+        measurement_value = value
+
     # TODO: Change this so it's an object that get's jsonified
     payload = f'''[
   {{
@@ -56,7 +62,7 @@ port = {mqtt_port}
     "measurements": [
       {{
         "time": "{timestamp}",
-        "{measurement}": {value * multiplier}
+        "{measurement}": {measurement_value}
       }}
     ]
   }}
@@ -125,18 +131,23 @@ multiplier = {multiplier}
     now = datetime.datetime.now(pytz.timezone('UTC'))
     timestamp = now.strftime('%Y-%m-%dT%H:%M:%SZ')
 
-    # TODO: Change this so it's an object that gets jsonified
-    payload = f'''[
-  {{
-    "device_name": "{device_name}",
-    "measurements": [
-      {{
-        "time": "{timestamp}",
-        "{measurement}": {value * multiplier}
-      }}
+    try:
+        measurement_value = float(value) * multiplier
+    except (ValueError, TypeError):
+        measurement_value = value
+
+    payload_obj = [
+        {
+            "device_name": device_name,
+            "measurements": [
+                {
+                    "time": timestamp,
+                    measurement: measurement_value
+                }
+            ]
+        }
     ]
-  }}
-]'''
+    payload = json.dumps(payload_obj)
 
     headers = {
         'Authorization': f'Bearer {token}',
